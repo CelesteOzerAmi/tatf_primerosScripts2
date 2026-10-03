@@ -2,8 +2,6 @@ package com.tatf.swaglabs.modules.login.task;
 
 import com.tatf.core.browser.IBrowser;
 import com.tatf.core.verification.IVerify;
-import com.tatf.swaglabs.modules.home.data.HomeData;
-import com.tatf.swaglabs.modules.home.task.HomeTask;
 import com.tatf.swaglabs.modules.login.data.LoginData;
 import com.tatf.swaglabs.modules.login.pom.LoginPO;
 
@@ -16,18 +14,23 @@ public class LoginTask {
         this.login = new LoginPO(this.browser);
     }
 
-    public void enterToSystem(String url) {
-        this.browser.interaction().navigateTo(url);
-    }
-
     public void verifyTitle(String title) {
         IVerify.create().verify(LoginData.TITLE, this.login.getTitle(), "El título no es el esperado.");
     }
 
-    public void logInToTheSystemAndVerify(String username, String password) {
-        this.login.enterUsername(username);
-        this.login.enterPassword(password);
+    public void IniciarSesion(String email, String password) {
+        this.login.clickIniciarSesion();
+        this.login.ingresarEmail(email);
+        this.login.ingresarPassword(password);
         this.login.clickLogin();
-        new HomeTask(browser).verifyTitle(HomeData.TITLE);
+    }
+
+    public void VerificarConfirmacion(){
+        IVerify.create().verifyTrue(this.login.VerificarConfirmacion(),"Sesión no iniciada");
+        this.login.AceptarConfirmacion();
+    }
+
+    public void VerificarUsuario(){
+        IVerify.create().verifyTrue(this.login.UsuarioLogueado(), "Usuario no fue logueado correctamente");
     }
 }

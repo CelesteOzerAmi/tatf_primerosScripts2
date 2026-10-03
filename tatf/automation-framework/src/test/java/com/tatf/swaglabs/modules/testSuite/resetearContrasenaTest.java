@@ -3,8 +3,9 @@ package com.tatf.swaglabs.modules.testSuite;
 import com.tatf.core.browser.BrowserFactory;
 import com.tatf.core.browser.IBrowser;
 import com.tatf.core.verification.IVerify;
-import com.tatf.swaglabs.modules.ingresarCES.IngresarCesPO;
-import com.tatf.swaglabs.modules.inicio.InicioPO;
+import com.tatf.swaglabs.modules.ingresarCES.task.IngresarCesTask;
+import com.tatf.swaglabs.modules.login.task.LoginTask;
+import com.tatf.swaglabs.modules.resetearContrasena.task.ResetearContrasenaTask;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,15 +13,17 @@ import org.junit.jupiter.api.Test;
 public class resetearContrasenaTest {
     IBrowser browser;
     IVerify verify;
-    private IngresarCesPO ingresarCes;
-    private InicioPO ingresar;
+    private IngresarCesTask ingresarCes;
+    private LoginTask login;
+    private ResetearContrasenaTask resetearContrasena;
 
     @BeforeEach
     public void setUp(){
         browser = BrowserFactory.getBrowser(true);
         verify = IVerify.create();
-        this.ingresarCes = new IngresarCesPO(this.browser);
-        this.ingresar = new InicioPO(this.browser);
+        this.ingresarCes = new IngresarCesTask(this.browser);
+        this.login = new LoginTask(this.browser);
+        this.resetearContrasena = new ResetearContrasenaTask(this.browser);
     }
 
     @AfterAll
@@ -31,25 +34,22 @@ public class resetearContrasenaTest {
     @Test
     public void resetearContrasena(){
         // ingresar a ces //
-        this.ingresarCes.IngresarCES();
+        this.ingresarCes.ingresarCES();
 
         String email = "yaniscorrea@gmail.com";
         String newPassword = "mariaAdminCES123NUEVAcontraseñaSegura.";
 
         // reinicio de contraseña //
-        this.ingresar.ReiniciarContrasena(email, newPassword);
+        this.resetearContrasena.ResetearContrasena(email, newPassword);
 
         // se verifica que se emita mensaje de Contraseña reiniciada. //
-        boolean contrasenaReiniciada = browser.find().xpath("//*[@id=\"swal2-html-container\" and contains(text(),\"Contraseña reiniciada.\")]").isDisplayed();
-        verify.verifyTrue(contrasenaReiniciada, "Contraseña no se reinició correctamente");
-
-        browser.find().xpath("//*[text()='OK']").click();
+        this.resetearContrasena.VerificarConfirmacion();
 
         // inicio de sesión con datos actualizados //
-        this.ingresar.Login(email, newPassword);
+        this.login.IniciarSesion(email, newPassword);
+        this.login.VerificarConfirmacion();
 
-        // se verifica que el usuario logueado coincida con los datos del admin //
-        boolean usuarioLogueado = browser.find().xpath("//*[@id=\"content\"]/nav/ul/li/div/div/a[contains(text(),\"Yanis  Correa\")]").isDisplayed();
-        verify.verifyTrue(usuarioLogueado,  "Usuario no fue logueado correctamente");
+        // se verifica que el usuario logueado coincida con los datos del admin creado //
+        this.login.VerificarUsuario();
     }
 }

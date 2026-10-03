@@ -1,32 +1,51 @@
 package com.tatf.swaglabs.modules.login.pom;
 
 import com.tatf.core.browser.IBrowser;
+import com.tatf.swaglabs.modules.login.data.LoginData;
 
 public class LoginPO {
     private final IBrowser browser;
-
-    private final String title = "login_logo";
-    private final String usernameInput = "user-name";
-    private final String passwordInput = "password";
-    private final String loginButton = "login-button";
+    private final String iniciarSesionbtn = "//*[@id=\"cardLogin\"]/div/div/div/div[1]/div[contains(text(),\"Iniciar sesión\")]";
+    private final String title = "login";
+    private final String btnEmail = "inputEmail";
+    private final String btnContrasena = "inputPassword";
+    private final String loginButton = "//*[@id=\"formLogin\"]/div[3]/div[2]/button";
+    private final String confirmationButton = "//*[@id=\"swal2-html-container\" and contains(text(),\"Sesión iniciada\")]";
+    private final String okButton = "//*[text()='OK']";
 
     public LoginPO(IBrowser browser) {
         this.browser = browser;
+    }
+
+    public void clickIniciarSesion(){
+        this.browser.find().xpath(iniciarSesionbtn).click();
     }
 
     public String getTitle() {
         return this.browser.find().className(title).getText();
     }
 
-    public void enterUsername(String username) {
-        this.browser.find().id(usernameInput).write(username);
+    public void ingresarEmail(String email) {
+        this.browser.find().name(btnEmail).clear().write(email);
     }
 
-    public void enterPassword(String password) {
-        this.browser.find().id(passwordInput).write(password);
+    public void ingresarPassword(String password) {
+        this.browser.find().name(btnContrasena).write(password);
     }
 
     public void clickLogin() {
-        this.browser.find().id(loginButton).click();
+        this.browser.find().xpath(loginButton).click();
+    }
+
+    public boolean VerificarConfirmacion(){
+        return browser.find().xpath(confirmationButton).isDisplayed();
+    }
+
+    public void AceptarConfirmacion(){
+        this.browser.find().xpath(okButton).click();
+    }
+
+    public boolean UsuarioLogueado(){
+        return browser.find().xpath(LoginData.usuarioLogueado).isDisplayed();
     }
 }
