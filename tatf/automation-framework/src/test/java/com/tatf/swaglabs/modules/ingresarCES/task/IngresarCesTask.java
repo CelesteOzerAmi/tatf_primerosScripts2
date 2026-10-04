@@ -20,9 +20,4 @@ public class IngresarCesTask {
         this.ingresarCesPO.IngresarHash();
         this.ingresarCesPO.AccederCES();
     }
-
-    public void verifyTitle() {
-        IVerify.create().verify(IngresarCesData.title, this.ingresarCesPO.getTitle(), "El título no es el esperado.");
-    }
-
 }

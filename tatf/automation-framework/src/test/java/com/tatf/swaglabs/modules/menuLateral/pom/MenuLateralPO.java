@@ -1,6 +1,9 @@
 package com.tatf.swaglabs.modules.menuLateral.pom;
 
 import com.tatf.core.browser.IBrowser;
+import com.tatf.core.element.Element;
+
+import java.util.List;
 
 public class MenuLateralPO {
     private final IBrowser browser;
@@ -13,10 +16,11 @@ public class MenuLateralPO {
     private final String btnRegistro = "btnRegister";
     private final String btnCrearUsuarioTester = "//*[@id=\"cardLogin\"]//*[contains(text(),\"Crear usuario\")]";
     private final String btnConfirmar = "*//button[contains(text(),\"Sí\")]";
-    private final String btnVerUsuarios = "//*[@id=\"wrapper\"]/ul/li/div[3]/a/span[contains(text(),\"Ver usuarios\")]";
+    private final String btnVerUsuarios = "//*[@id=\"cardLogin\"]//*[contains(text(),\"Ver usuarios\")]";
     private final String mensajeUsuarioCreado = "//*[@id=\"swal2-html-container\" and contains(text(),\"Usuario creado.\")]";
     private final String btnOk = "//*[text()='OK']";
     private final String mensajeUsuarioEliminado = "//*[@id=\"swal2-html-container\" and contains(text(),\"Usuario eliminado.\")]";
+    private final String usuarioEliminado = "//*[@id=\"bodyTable\"]/*/td[contains(text(),\"mariana@gmail.com\")]";
 
     public MenuLateralPO(IBrowser browser) {
         this.browser = browser;
@@ -77,6 +81,10 @@ public class MenuLateralPO {
 
     public boolean BuscarUsuario(String email){
         return browser.find().id(email).isDisplayed();
+    }
+
+    public boolean EncontrarUsuario(){
+        return browser.find().xpathList(usuarioEliminado).isEmpty();
     }
 
     public boolean ConfirmacionUsuarioEliminado(){

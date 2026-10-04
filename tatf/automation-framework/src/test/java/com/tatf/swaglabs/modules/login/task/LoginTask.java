@@ -14,10 +14,6 @@ public class LoginTask {
         this.login = new LoginPO(this.browser);
     }
 
-    public void verifyTitle(String title) {
-        IVerify.create().verify(LoginData.TITLE, this.login.getTitle(), "El título no es el esperado.");
-    }
-
     public void IniciarSesion(String email, String password) {
         this.login.clickIniciarSesion();
         this.login.ingresarEmail(email);

@@ -14,10 +14,6 @@ public class RegistroTask {
         this.registro = new RegistroPO(this.browser);
     }
 
-    public void verifyTitle(String title) {
-        IVerify.create().verify(RegistroData.title, this.registro.getTitle(title), "El título no es el esperado.");
-    }
-
     public void verifyConfirm(){
         this.registro.verifyConfirm();
     }

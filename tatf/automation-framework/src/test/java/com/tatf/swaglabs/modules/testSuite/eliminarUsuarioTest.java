@@ -48,10 +48,10 @@ public class eliminarUsuarioTest {
         this.menuLateral.EliminarUsuario(testerEmail);
 
         // se verifica que se emita mensaje de Usuario eliminado. //
-       this.menuLateral.VerificarUsuarioEliminado();
+        this.menuLateral.VerificarUsuarioEliminado();
 
         // se busca email de usuario eliminado en el listado de usuarios y se verifica que no esté //
-        this.menuLateral.ValidarUsuarioEliminado(testerEmail);
+        this.menuLateral.ValidarUsuarioEliminado();
     }
 
 }

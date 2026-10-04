@@ -7,7 +7,7 @@ public class RegistroPO {
 
     private final IBrowser browser;
 
-    private final String btnRegistrarse = "//*[@id=\"wrapper\"]/ul/li/div[2]/a/span[text()=\"Registrarse\"]";
+    private final String btnRegistrarse = "//*[@id=\"cardLogin\"]//*[text()=\"Registrarse\"]";
     private final String btnEmail = "inputEmail";
     private final String btnContrasena = "inputPassword";
     private final String btnNombre = "inputFirstName";
@@ -16,6 +16,7 @@ public class RegistroPO {
     private final String btnPais = "inputCountry";
     private final String btnRegister = "btnRegister";
     private final String okButton = "//*[text()='OK']";
+    private final String confirmacion = "//*[text()='Usuario creado.']";
 
     public RegistroPO(IBrowser browser) {
         this.browser = browser;
@@ -58,7 +59,7 @@ public class RegistroPO {
     }
 
     public void verifyConfirm(){
-        browser.find().xpath(RegistroData.confirmacion).isDisplayed();
+        browser.find().xpath(confirmacion).isDisplayed();
     }
 
     public void clickConfirm(){

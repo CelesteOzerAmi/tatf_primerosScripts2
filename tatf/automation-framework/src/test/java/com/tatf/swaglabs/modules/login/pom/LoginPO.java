@@ -5,13 +5,14 @@ import com.tatf.swaglabs.modules.login.data.LoginData;
 
 public class LoginPO {
     private final IBrowser browser;
-    private final String iniciarSesionbtn = "//*[@id=\"cardLogin\"]/div/div/div/div[1]/div[contains(text(),\"Iniciar sesión\")]";
+    private final String iniciarSesionbtn = "//*[@id=\"cardLogin\"]//*[contains(text(),\"Iniciar sesión\")]";
     private final String title = "login";
     private final String btnEmail = "inputEmail";
     private final String btnContrasena = "inputPassword";
-    private final String loginButton = "//*[@id=\"formLogin\"]/div[3]/div[2]/button";
+    private final String loginButton = "//*[@id=\"formLogin\"]//button[contains(text(),\"Iniciar Sesión\")]";
     private final String confirmationButton = "//*[@id=\"swal2-html-container\" and contains(text(),\"Sesión iniciada\")]";
     private final String okButton = "//*[text()='OK']";
+    public static final String usuarioLogueado = "//a[text()=\"Yanis  Correa\"]";
 
     public LoginPO(IBrowser browser) {
         this.browser = browser;
@@ -46,6 +47,6 @@ public class LoginPO {
     }
 
     public boolean UsuarioLogueado(){
-        return browser.find().xpath(LoginData.usuarioLogueado).isDisplayed();
+        return browser.find().xpath(usuarioLogueado).isDisplayed();
     }
 }

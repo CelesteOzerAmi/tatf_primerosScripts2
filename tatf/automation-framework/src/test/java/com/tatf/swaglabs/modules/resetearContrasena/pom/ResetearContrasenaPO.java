@@ -5,7 +5,7 @@ import com.tatf.core.browser.IBrowser;
 public class ResetearContrasenaPO {
     private final IBrowser browser;
 
-    private final String btnReiniciarContrasena = "//*[@id=\"cardLogin\"]/div/div/div/div[1]/div[contains(text(),\"Reiniciar contraseña\")]";
+    private final String btnReiniciarContrasena = "//*[@id=\"cardLogin\"]//*[contains(text(),\"Reiniciar contraseña\")]";
     private final String btnEmail = "inputEmail";
     private final String btnContrasena = "inputPassword";
     private final String btnConfirmarContra = "inputRepeatPassword";
