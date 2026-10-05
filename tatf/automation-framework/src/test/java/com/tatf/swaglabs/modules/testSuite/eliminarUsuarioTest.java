@@ -6,9 +6,10 @@ import com.tatf.core.verification.IVerify;
 import com.tatf.swaglabs.modules.ingresarCES.task.IngresarCesTask;
 import com.tatf.swaglabs.modules.login.task.LoginTask;
 import com.tatf.swaglabs.modules.menuLateral.task.MenuLateralTask;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class eliminarUsuarioTest {
     IBrowser browser;
@@ -19,20 +20,21 @@ public class eliminarUsuarioTest {
 
     @BeforeEach
     public void setUp(){
-        browser = BrowserFactory.getBrowser(true);
+        browser = BrowserFactory.getBrowser();
         verify = IVerify.create();
         this.ingresarCes = new IngresarCesTask(this.browser);
         this.login = new LoginTask(this.browser);
         this.menuLateral = new MenuLateralTask(this.browser);
     }
 
-    @AfterAll
-    public static void quit(){
+    @AfterEach
+    public void quit(){
         BrowserFactory.quitBrowser();
     }
 
-    @Test
-    public void eliminarUsuario(){
+    @ParameterizedTest(name = "{arguments}")
+    @ValueSource(strings = {"mariana@gmail.com", "dardo@gmail.com", "yaniscorrea@gmail.com"})
+    public void eliminarUsuario(String testerEmail){
         // ingresar a ces //
         this.ingresarCes.ingresarCES();
 
@@ -44,14 +46,13 @@ public class eliminarUsuarioTest {
         this.menuLateral.VerUsuarios();
 
         // eliminar usuario //
-        String testerEmail = "mariana@gmail.com";
         this.menuLateral.EliminarUsuario(testerEmail);
 
         // se verifica que se emita mensaje de Usuario eliminado. //
         this.menuLateral.VerificarUsuarioEliminado();
 
         // se busca email de usuario eliminado en el listado de usuarios y se verifica que no esté //
-        this.menuLateral.ValidarUsuarioEliminado();
+        this.menuLateral.ValidarUsuarioEliminado(testerEmail);
     }
 
 }

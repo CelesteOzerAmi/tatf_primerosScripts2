@@ -56,7 +56,7 @@ public class MenuLateralTask {
         this.menuLateral.AceptarConfirmacion();
     }
 
-    public void ValidarUsuarioEliminado(){
-        IVerify.create().verifyTrue(this.menuLateral.EncontrarUsuario(), "Usuario no se eliminó");
+    public void ValidarUsuarioEliminado(String testerEmail){
+        IVerify.create().verifyTrue(this.menuLateral.EncontrarUsuario(testerEmail), "Usuario no se eliminó");
     }
 }

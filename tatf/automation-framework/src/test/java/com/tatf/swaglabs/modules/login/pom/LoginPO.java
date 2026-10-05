@@ -12,7 +12,6 @@ public class LoginPO {
     private final String loginButton = "//*[@id=\"formLogin\"]//button[contains(text(),\"Iniciar Sesión\")]";
     private final String confirmationButton = "//*[@id=\"swal2-html-container\" and contains(text(),\"Sesión iniciada\")]";
     private final String okButton = "//*[text()='OK']";
-    public static final String usuarioLogueado = "//a[text()=\"Yanis  Correa\"]";
 
     public LoginPO(IBrowser browser) {
         this.browser = browser;
@@ -46,7 +45,7 @@ public class LoginPO {
         this.browser.find().xpath(okButton).click();
     }
 
-    public boolean UsuarioLogueado(){
-        return browser.find().xpath(usuarioLogueado).isDisplayed();
+    public boolean getUsuarioLogueado(String nombreUsuario) {
+        return this.browser.find().xpath(String.format("//a[contains(normalize-space(), '%s')]", nombreUsuario)).isDisplayed();
     }
 }

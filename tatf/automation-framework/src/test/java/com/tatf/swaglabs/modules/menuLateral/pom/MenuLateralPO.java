@@ -20,7 +20,6 @@ public class MenuLateralPO {
     private final String mensajeUsuarioCreado = "//*[@id=\"swal2-html-container\" and contains(text(),\"Usuario creado.\")]";
     private final String btnOk = "//*[text()='OK']";
     private final String mensajeUsuarioEliminado = "//*[@id=\"swal2-html-container\" and contains(text(),\"Usuario eliminado.\")]";
-    private final String usuarioEliminado = "//*[@id=\"bodyTable\"]/*/td[contains(text(),\"mariana@gmail.com\")]";
 
     public MenuLateralPO(IBrowser browser) {
         this.browser = browser;
@@ -83,8 +82,8 @@ public class MenuLateralPO {
         return browser.find().id(email).isDisplayed();
     }
 
-    public boolean EncontrarUsuario(){
-        return browser.find().xpathList(usuarioEliminado).isEmpty();
+    public boolean EncontrarUsuario(String testerEmail){
+        return this.browser.find().xpathList(String.format("//*[@id=\"bodyTable\"]/*/td[contains(text(),'%s')]", testerEmail)).isEmpty();
     }
 
     public boolean ConfirmacionUsuarioEliminado(){

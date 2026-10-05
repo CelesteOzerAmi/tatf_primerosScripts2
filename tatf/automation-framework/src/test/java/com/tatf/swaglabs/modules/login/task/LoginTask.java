@@ -26,7 +26,7 @@ public class LoginTask {
         this.login.AceptarConfirmacion();
     }
 
-    public void VerificarUsuario(){
-        IVerify.create().verifyTrue(this.login.UsuarioLogueado(), "Usuario no fue logueado correctamente");
+    public void VerificarUsuario(String nombreUsuario){
+        IVerify.create().verifyTrue(this.login.getUsuarioLogueado(nombreUsuario), "Usuario no fue logueado correctamente");
     }
 }

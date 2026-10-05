@@ -6,9 +6,10 @@ import com.tatf.core.verification.IVerify;
 import com.tatf.swaglabs.modules.ingresarCES.task.IngresarCesTask;
 import com.tatf.swaglabs.modules.login.task.LoginTask;
 import com.tatf.swaglabs.modules.menuLateral.task.MenuLateralTask;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class crearUsuarioTesterTest {
 
@@ -20,20 +21,24 @@ public class crearUsuarioTesterTest {
 
     @BeforeEach
     public void setUp(){
-        browser = BrowserFactory.getBrowser(true);
+        browser = BrowserFactory.getBrowser();
         verify = IVerify.create();
         this.ingresarCes = new IngresarCesTask(this.browser);
         this.login = new LoginTask(this.browser);
         this.menuLateral = new MenuLateralTask(this.browser);
     }
 
-    @AfterAll
-    public static void quit(){
+    @AfterEach
+    public void quit(){
         BrowserFactory.quitBrowser();
     }
 
-    @Test
-    public void crearUsuarioTester(){
+    @ParameterizedTest(name = "{0}, {1}")
+    @CsvFileSource(
+            resources = "/datos_crearUsuarioTesterTest.csv",
+            useHeadersInDisplayName = true
+    )
+    public void crearUsuarioTester(String nombre, String apellido, String testerEmail, String password, String pais, String rol){
         // ingresar a ces //
         this.ingresarCes.ingresarCES();
 
@@ -42,11 +47,9 @@ public class crearUsuarioTesterTest {
         this.login.VerificarConfirmacion();
 
         // crear usuario tester //
-        String testerEmail = "juan@email.com";
         this.menuLateral.IrACrearUsuario();
         this.menuLateral.VerificarTitulo();
-        this.menuLateral.CrearUsuarioTester("Juan", "Perez", testerEmail,
-                "JuanPerezTester123.", "Uruguay", "testerJunior");
+        this.menuLateral.CrearUsuarioTester(nombre, apellido, testerEmail, password, pais, rol);
 
         // se verifica que exista mensaje de Usuario creado. //
         this.menuLateral.VerificarUsuarioCreado();
