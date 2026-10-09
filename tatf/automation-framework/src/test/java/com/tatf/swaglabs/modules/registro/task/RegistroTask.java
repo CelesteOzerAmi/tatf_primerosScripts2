@@ -14,23 +14,20 @@ public class RegistroTask {
         this.registro = new RegistroPO(this.browser);
     }
 
-    public void verifyConfirm(){
-        this.registro.verifyConfirm();
-    }
-
     public void Registro(String nombre, String apellido, String email, String password, String pais){
-        this.registro.clickRegistrarse();
-        this.registro.ingresarNombre(nombre);
-        this.registro.ingresarApellido(apellido);
-        this.registro.ingresarEmail(email);
-        this.registro.ingresarPassword(password);
-        this.registro.confirmarPassword(password);
-        this.registro.ingresarPais(pais);
-        this.registro.clickRegister();
+        this.registro.ClickRegistrarse();
+        this.registro.IngresarNombre(nombre);
+        this.registro.IngresarApellido(apellido);
+        this.registro.IngresarEmail(email);
+        this.registro.IngresarPassword(password);
+        this.registro.ConfirmarPassword(password);
+        this.registro.IngresarPais(pais);
+        this.registro.ClickRegister();
     }
 
-    public void ConfirmRegister(){
-        this.registro.clickConfirm();
+    public void VerificarConfirmacion(){
+        IVerify.create().verifyTrue(this.registro.VerificarConfirmacion(), "Usuario no fue creado correctamente");
+        this.registro.AceptarConfirmacion();
     }
 
 }

@@ -21,6 +21,14 @@ public class LoginTask {
         this.login.clickLogin();
     }
 
+    public void IniciarSesionAdmin(){
+        this.login.clickIniciarSesion();
+        this.login.ingresarEmail(LoginData.emailAdmin);
+        this.login.ingresarPassword(LoginData.passwordAdmin);
+        this.login.clickLogin();
+        this.login.AceptarConfirmacion();
+    }
+
     public void VerificarConfirmacion(){
         IVerify.create().verifyTrue(this.login.VerificarConfirmacion(),"Sesión no iniciada");
         this.login.AceptarConfirmacion();

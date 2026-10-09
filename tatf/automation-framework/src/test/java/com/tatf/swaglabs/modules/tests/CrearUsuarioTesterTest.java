@@ -1,23 +1,24 @@
-package com.tatf.swaglabs.modules.testSuite;
+package com.tatf.swaglabs.modules.tests;
 
 import com.tatf.core.browser.BrowserFactory;
 import com.tatf.core.browser.IBrowser;
 import com.tatf.core.verification.IVerify;
+import com.tatf.swaglabs.modules.crearUsuario.task.CrearUsuarioTask;
 import com.tatf.swaglabs.modules.ingresarCES.task.IngresarCesTask;
 import com.tatf.swaglabs.modules.login.task.LoginTask;
-import com.tatf.swaglabs.modules.menuLateral.task.MenuLateralTask;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
-public class crearUsuarioTesterTest {
+public class CrearUsuarioTesterTest {
 
     IBrowser browser;
     IVerify verify;
     private IngresarCesTask ingresarCes;
     private LoginTask login;
-    private MenuLateralTask menuLateral;
+    private CrearUsuarioTask crearUsuario;
 
     @BeforeEach
     public void setUp(){
@@ -25,7 +26,7 @@ public class crearUsuarioTesterTest {
         verify = IVerify.create();
         this.ingresarCes = new IngresarCesTask(this.browser);
         this.login = new LoginTask(this.browser);
-        this.menuLateral = new MenuLateralTask(this.browser);
+        this.crearUsuario = new CrearUsuarioTask(this.browser);
     }
 
     @AfterEach
@@ -33,6 +34,7 @@ public class crearUsuarioTesterTest {
         BrowserFactory.quitBrowser();
     }
 
+    @Tag("RegistroUsuario")
     @ParameterizedTest(name = "{0}, {1}")
     @CsvFileSource(
             resources = "/datos_crearUsuarioTesterTest.csv",
@@ -43,21 +45,20 @@ public class crearUsuarioTesterTest {
         this.ingresarCes.ingresarCES();
 
         // inicio de sesión con usuario admin //
-        this.login.IniciarSesion("yaniscorrea@gmail.com", "12345");
-        this.login.VerificarConfirmacion();
+        this.login.IniciarSesionAdmin();
 
         // crear usuario tester //
-        this.menuLateral.IrACrearUsuario();
-        this.menuLateral.VerificarTitulo();
-        this.menuLateral.CrearUsuarioTester(nombre, apellido, testerEmail, password, pais, rol);
+        this.crearUsuario.IrACrearUsuario();
+        this.crearUsuario.VerificarTitulo();
+        this.crearUsuario.CrearUsuarioTester(nombre, apellido, testerEmail, password, pais, rol);
 
         // se verifica que exista mensaje de Usuario creado. //
-        this.menuLateral.VerificarUsuarioCreado();
+        this.crearUsuario.VerificarUsuarioCreado();
 
         // ver usuarios //
-        this.menuLateral.VerUsuarios();
+        this.crearUsuario.VerUsuarios();
 
         // se verifica que el email del usuario creado se encuentre en el listado //
-        this.menuLateral.ValidarUsuarioCreado(testerEmail);
+        this.crearUsuario.ValidarUsuarioCreado(testerEmail);
     }
 }

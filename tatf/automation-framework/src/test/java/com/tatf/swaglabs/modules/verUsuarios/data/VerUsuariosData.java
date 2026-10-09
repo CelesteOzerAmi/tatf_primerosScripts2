@@ -1,5 +1,5 @@
-package com.tatf.swaglabs.modules.menuLateral.data;
+package com.tatf.swaglabs.modules.verUsuarios.data;
 
-public class MenuLateralData {
+public class VerUsuariosData {
     public static final String titleCrearUsuario = "ALTA DE CUENTA PARA TESTER";
 }

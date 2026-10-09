@@ -16,9 +16,7 @@ public class BrowserFactory {
     }
 
     /**
-     * Arma un IBrowser listo para usar, con el driver correspondiente.
-
-     */
+     * Arma un IBrowser listo para usar, con el driver correspondiente.*/
     public static IBrowser getBrowser() {
         DriverType type = resolveDriverType();
         DriverManagerSingleton instance = DriverManagerSingleton.getInstance(type);
@@ -26,8 +24,31 @@ public class BrowserFactory {
     }
 
     /**
-     * Lee el browser a usar desde la propiedad del sistema "browser" (CHROME por defecto).
+     * Devuelve el IBrowser especificando el tipo mediante un String (e.g., "FIREFOX", "CHROME").
+     *
+     * @param browserName Nombre del navegador a instanciar.
      */
+    public static IBrowser getBrowser(String browserName) {
+        DriverType type = resolveDriverType(browserName);
+        return createBrowserInstance(type);
+    }
+
+    private static IBrowser createBrowserInstance(DriverType type) {
+        DriverManagerSingleton instance = DriverManagerSingleton.getInstance(type);
+
+        return new BrowserImpl(instance, EXPLICIT_WAIT_DEFAULT_SECONDS, DEBUGGING);
+    }
+
+    private static DriverType resolveDriverType(String driverTypeStr) {
+        if (driverTypeStr == null || driverTypeStr.trim().isEmpty()) {
+            throw new IllegalArgumentException("El tipo de driver no puede ser nulo ni estar vacío.");
+        }
+        return DriverType.valueOf(driverTypeStr.toUpperCase().trim());
+    }
+
+    /*
+     * Lee el browser a usar desde la propiedad del sistema "browser" (CHROME por defecto).*/
+
     private static DriverType resolveDriverType() {
         return DriverType.valueOf(DRIVER_TYPE.toUpperCase());
     }

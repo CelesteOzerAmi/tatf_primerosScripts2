@@ -1,11 +1,8 @@
-package com.tatf.swaglabs.modules.menuLateral.pom;
+package com.tatf.swaglabs.modules.crearUsuario.pom;
 
 import com.tatf.core.browser.IBrowser;
-import com.tatf.core.element.Element;
 
-import java.util.List;
-
-public class MenuLateralPO {
+public class CrearUsuarioPO {
     private final IBrowser browser;
     private final String title = "title";
     private final String btnEmail = "inputEmail";
@@ -15,13 +12,10 @@ public class MenuLateralPO {
     private final String btnPais = "inputCountry";
     private final String btnRegistro = "btnRegister";
     private final String btnCrearUsuarioTester = "//*[@id=\"cardLogin\"]//*[contains(text(),\"Crear usuario\")]";
-    private final String btnConfirmar = "*//button[contains(text(),\"Sí\")]";
-    private final String btnVerUsuarios = "//*[@id=\"cardLogin\"]//*[contains(text(),\"Ver usuarios\")]";
     private final String mensajeUsuarioCreado = "//*[@id=\"swal2-html-container\" and contains(text(),\"Usuario creado.\")]";
     private final String btnOk = "//*[text()='OK']";
-    private final String mensajeUsuarioEliminado = "//*[@id=\"swal2-html-container\" and contains(text(),\"Usuario eliminado.\")]";
 
-    public MenuLateralPO(IBrowser browser) {
+    public CrearUsuarioPO(IBrowser browser) {
         this.browser = browser;
     }
 
@@ -69,25 +63,7 @@ public class MenuLateralPO {
         this.browser.find().xpath(btnOk).click();
     }
 
-    public void VerUsuarios(){
-        this.browser.find().xpath(btnVerUsuarios).click();
-    }
-
-    public void EliminarUsuario(String email){
-        this.browser.find().id(email).click();
-        this.browser.find().xpath(btnConfirmar).click();
-    }
-
     public boolean BuscarUsuario(String email){
         return browser.find().id(email).isDisplayed();
     }
-
-    public boolean EncontrarUsuario(String testerEmail){
-        return this.browser.find().xpathList(String.format("//*[@id=\"bodyTable\"]/*/td[contains(text(),'%s')]", testerEmail)).isEmpty();
-    }
-
-    public boolean ConfirmacionUsuarioEliminado(){
-        return browser.find().xpath(mensajeUsuarioEliminado).isDisplayed();
-    }
-
 }

@@ -2,6 +2,7 @@ package com.tatf.swaglabs.modules.resetearContrasena.task;
 
 import com.tatf.core.browser.IBrowser;
 import com.tatf.core.verification.IVerify;
+import com.tatf.swaglabs.modules.resetearContrasena.data.ResetearContrasenaData;
 import com.tatf.swaglabs.modules.resetearContrasena.pom.ResetearContrasenaPO;
 
 public class ResetearContrasenaTask {
@@ -14,10 +15,10 @@ public class ResetearContrasenaTask {
     }
 
 
-    public void ResetearContrasena(String email, String nuevaContrasena){
+    public void ResetearContrasena(String email){
         this.resetearContrasena.ClickResetear();
         this.resetearContrasena.IngresarEmail(email);
-        this.resetearContrasena.IngresarNuevaContrasena(nuevaContrasena);
+        this.resetearContrasena.IngresarNuevaContrasena(ResetearContrasenaData.nuevaContrasena);
         this.resetearContrasena.EjecutarCambio();
     }
 

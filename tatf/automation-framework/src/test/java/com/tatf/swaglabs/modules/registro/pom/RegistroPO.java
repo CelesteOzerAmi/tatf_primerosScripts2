@@ -22,7 +22,7 @@ public class RegistroPO {
         this.browser = browser;
     }
 
-    public void clickRegistrarse(){
+    public void ClickRegistrarse(){
         this.browser.find().xpath(btnRegistrarse).click();
     }
 
@@ -30,39 +30,39 @@ public class RegistroPO {
         return this.browser.find().className(title).getText();
     }
 
-    public void ingresarNombre(String nombre) {
+    public void IngresarNombre(String nombre) {
         this.browser.find().name(btnNombre).write(nombre);
     }
 
-    public void ingresarApellido(String apellido) {
+    public void IngresarApellido(String apellido) {
         this.browser.find().name(btnApellido).write(apellido);
     }
 
-    public void ingresarEmail(String email) {
+    public void IngresarEmail(String email) {
         this.browser.find().name(btnEmail).clear().write(email);
     }
 
-    public void ingresarPassword(String password) {
+    public void IngresarPassword(String password) {
         this.browser.find().name(btnContrasena).write(password);
     }
 
-    public void confirmarPassword(String password) {
+    public void ConfirmarPassword(String password) {
         this.browser.find().name(btnConfirmarContra).write(password);
     }
 
-    public void ingresarPais(String pais) {
+    public void IngresarPais(String pais) {
         this.browser.find().name(btnPais).write(pais);
     }
 
-    public void clickRegister() {
+    public void ClickRegister() {
         this.browser.find().id(btnRegister).click();
     }
 
-    public void verifyConfirm(){
-        browser.find().xpath(confirmacion).isDisplayed();
+    public boolean VerificarConfirmacion(){
+        return browser.find().xpath(confirmacion).isDisplayed();
     }
 
-    public void clickConfirm(){
+    public void AceptarConfirmacion(){
         this.browser.find().xpath(okButton).click();
     }
 
